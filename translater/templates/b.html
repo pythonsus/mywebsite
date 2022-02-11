@@ -51,6 +51,11 @@
             {{form.text.label}} <br>
             {{form.text(size=30)}}
         </p>
+        <ul>
+            {% for error in form.text.errors %}
+                <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+            </ul>
         <p>{{form.submit()}}</p>
     </form>
     
