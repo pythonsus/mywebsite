@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+        body {
+    
+          
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .topnav {
+    overflow: hidden;
+    background-color: #333;
+    }
+    
+    .topnav a {
+    float: left;
+    color:cyan;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    
+    .topnav a:hover {
+    background-color: greenyellow;
+    color: black;
+    }
+    
+    .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+    }
+    </style>
+    <title>Text to binary</title>
+</head>
+<body>
+ 
+        <div class="topnav">
+            <h1><a href="/dev/logs"> Logs  </a></h1>
+            <h1><a href="/dev"> Translator  </a></h1>
+            <h1><a href="/dev/ca"> Credits and attributions  </a></h1>
+            <h1><a href="/dev/about"> About  </a></h1>
+            <h1><a href="/dev/pp"> Privacy policy</a></h1>
+         
+            <h1><a href="/dev/texttobinary"> Text to binary  </a></h1>
+        </div> 
+    <form action="" method="post">
+        <p>
+            {{form.text.label}} <br>
+            {{form.text(size=30)}}
+        </p>
+        <p>{{form.submit()}}</p>
+    </form>
+    
+</body>
+</html>

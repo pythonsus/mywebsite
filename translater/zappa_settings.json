@@ -1,0 +1,11 @@
+{
+    "dev": {
+        "s3_bucket": "zappascsdap",
+        "app_function": "translater.application",
+        "profile_name": "default",
+        "project_name": "dev",
+        "runtime": "python3.8",
+        "aws_region": "us-east-1"
+	
+    }
+}
