@@ -56,14 +56,29 @@
             {{form.translangto.label}} <br>
             {{form.translangto(size=30)}}
         </p>
+        <ul>
+            {% for error in form.translangto.errors %}
+                <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+            </ul>
         <p>
             {{form.source.label}} <br>
             {{form.source(size=30)}}
         </p>
+        <ul>
+            {% for error in form.source.errors %}
+                <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+            </ul>
         <p>
             {{form.tasktotrans.label}} <br>
             {{form.tasktotrans(size=100)}}
         </p>
+        <ul>
+            {% for error in form.tasktotrans.errors %}
+                <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+            </ul>
         
         <p>{{form.submit()}}</p>
   

@@ -52,6 +52,11 @@
             {{form.binary.label}} <br>
             {{form.binary(size=30)}}
         </p>
+        <ul>
+            {% for error in form.binary.errors %}
+                <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+            </ul>
         <p>{{form.submit()}}</p>
     </form>
 </body>
