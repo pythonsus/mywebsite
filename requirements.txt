@@ -4,7 +4,7 @@ botocore==1.23.53
 certifi==2021.10.8
 cfn-flip==1.3.0
 chardet==3.0.4
-charset-normalizer==2.0.11
+charset-normalizer==2.0.10
 click==8.0.3
 dnspython==2.2.0
 durationpy==0.5
