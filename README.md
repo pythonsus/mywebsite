@@ -6,4 +6,4 @@
   stuff to know:
     Releases are now made my pull requests.
  
-current version is 3.0.5
+current version is 4.0.0
