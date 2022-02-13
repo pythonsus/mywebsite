@@ -3,8 +3,9 @@
 from forms import  binary_to_text, contactform, text_to_binaryForm, transform
 from googletrans import Translator, constants
 from pprint import pprint
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from email_function import gmail_email
+import speech_recognition as sr
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = 'iuhguivfduivdifvjdfhv'
@@ -14,6 +15,8 @@ def decode_binary_string():
     form = binary_to_text()
     if form.is_submitted():
         result = request.form
+        
+      
         res = ''.join(chr(int(result['binary'][i*8:i*8+8],2)) for i in range(len(result['binary'])//8))
         return render_template('rt.html',res=res)
     return render_template('t.html',form=form)
@@ -32,24 +35,47 @@ def translater_func():
  
     if form.is_submitted():
         result = request.form
+        print(form.f.data)
         print(result)
-        try:
+  
+
+        file = request.files.get("f")
+   
+
+        if file:
+            recognizer = sr.Recognizer()
+            audioFile = sr.AudioFile(file)
+            with audioFile as source:
+                data = recognizer.record(source)
+            transcript = recognizer.recognize_google(data, key=None)
             t = result['translangto'].lower() or 'en'
-       
+        
             s=result['source'] or 'en'
             translator = Translator()
-            translation = translator.translate(result['tasktotrans'], dest=t.strip(),src=s)
-          
-
+            translation = translator.translate(transcript, dest=t.strip())
+            return render_template('result.html',res=translation.text,pro=translation.pronunciation)
+        else:
+            try:
+                t = result['translangto'].lower() or 'en'
         
-        except:
-            t = result['translangto'].lower() or 'en'
-           
-            translator = Translator()
-            translation = translator.translate(result['tasktotrans'], dest=t.strip())     
-    
+                s=result['source'] or 'en'
+                translator = Translator()
+                translation = translator.translate(result['tasktotrans'], dest=t.strip(),src=s)
+                return render_template('result2.html',res=translation.text,pro=translation.pronunciation)
             
-        return render_template('result.html',re=translation.text,pro=translation.pronunciation)
+
+            
+            except:
+                t = result['translangto'].lower() or 'en'
+            
+                translator = Translator()
+                translation = translator.translate(result['tasktotrans'], dest=t.strip())     
+                return render_template('result2.html',res=translation.text,pro=translation.pronunciation)
+            
+
+            
+            
+        
     return render_template('index.html',form=form)
 @application.route('/feedback', methods=['GET','POST'])
 def feedback_func():
