@@ -1,9 +1,9 @@
 
-
+import os
 from forms import  binary_to_text, contactform, text_to_binaryForm, transform
 from googletrans import Translator, constants
 from pprint import pprint
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, flash
 from email_function import gmail_email
 import speech_recognition as sr
 
@@ -40,27 +40,46 @@ def translater_func():
   
 
         file = request.files.get("f")
+        fi = file.filename
+        l = fi.split('.')
+        
    
 
         if file:
-            recognizer = sr.Recognizer()
-            audioFile = sr.AudioFile(file)
-            with audioFile as source:
-                data = recognizer.record(source)
-            transcript = recognizer.recognize_google(data, key=None)
-            t = result['translangto'].lower() or 'en'
-        
-            s=result['source'] or 'en'
-            translator = Translator()
-            translation = translator.translate(transcript, dest=t.strip())
-            return render_template('result.html',res=translation.text,pro=translation.pronunciation)
+            if l[1] == 'wav':
+                recognizer = sr.Recognizer()
+                audioFile = sr.AudioFile(file)
+                with audioFile as source:
+                    data = recognizer.record(source)
+                transcript = recognizer.recognize_google(data, key=None)
+                t = result['translangto'].lower() or 'en'
+            
+                s=result['source'] or 'en'
+                translator = Translator()
+                translation = translator.translate(transcript, dest=t.strip())
+                return render_template('result.html',res=translation.text,pro=translation.pronunciation)
+            if l[1] == 'txt':
+               
+                i = file.read()
+                i2 = str(i,'utf-8')
+                i3=i2.replace("."," ")
+                print(i3)
+                t = result['translangto'].lower() or 'en'
+            
+                s=result['source'] or 'en'
+                translator = Translator()
+                translation = translator.translate(i3, dest=t.strip())
+                return render_template('result.html',res=translation.text,pro=translation.pronunciation)
+            else:
+                flash("Wav file only supported","info")
+            
         else:
             try:
                 t = result['translangto'].lower() or 'en'
         
                 s=result['source'] or 'en'
                 translator = Translator()
-                translation = translator.translate(result['tasktotrans'], dest=t.strip(),src=s)
+                translation = translator.translate(result['tasktotrans'].replace("."," "), dest=t.strip(),src=s)
                 return render_template('result2.html',res=translation.text,pro=translation.pronunciation)
             
 
@@ -69,7 +88,7 @@ def translater_func():
                 t = result['translangto'].lower() or 'en'
             
                 translator = Translator()
-                translation = translator.translate(result['tasktotrans'], dest=t.strip())     
+                translation = translator.translate(result['tasktotrans'].replace("."," "), dest=t.strip())     
                 return render_template('result2.html',res=translation.text,pro=translation.pronunciation)
             
 
