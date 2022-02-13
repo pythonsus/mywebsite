@@ -6,4 +6,6 @@
   stuff to know:
     Releases are now made my pull requests.
  
-current version is 4.0.0
+current version is 4.5.0
+website link is here:
+https://i6h1qy8fv8.execute-api.us-east-1.amazonaws.com/dev
