@@ -49,9 +49,11 @@
         <h1><a href="/dev/binarytotext"> Binary to text  </a></h1>
     </div>
   
-
+    <h1>choose file or text if you choose both only the file will be translated</h1>
+    <h1>WAV file only supported</h1>
     
-    <form action="" method="post">
+    <form action="" method="POST" enctype="multipart/form-data">
+    
         <p>
             {{form.translangto.label}} <br>
             {{form.translangto(size=30)}}
@@ -79,7 +81,12 @@
                 <li style="color:red;">{{ error }}</li>
             {% endfor %}
             </ul>
-        
+            <p>
+                {{form.csrf_token}}
+                {{form.f}}
+          
+    
+            </p>
         <p>{{form.submit()}}</p>
   
     </form>
